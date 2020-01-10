@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "905125633582",
+    "firebase_url": "https://native-apps-project-quiz.firebaseio.com",
+    "project_id": "native-apps-project-quiz",
+    "storage_bucket": "native-apps-project-quiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905125633582:android:436d7fbf1d13e7f60989bf",
+        "android_client_info": {
+          "package_name": "com.dominykas.jurkus.WordQuiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905125633582-5p182a3fll3hvc4f3c1l6m1c4s35lu7v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dominykas.jurkus.WordQuiz",
+            "certificate_hash": "c7297228c24f8112508e43b8b3c01302938992c9"
+          }
+        },
+        {
+          "client_id": "905125633582-js1qjobebohjor5a3bo2k9vsm84j45ba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtqPGy2rOrZzuFR71AeZgww3tShjD7xpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "905125633582-js1qjobebohjor5a3bo2k9vsm84j45ba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
