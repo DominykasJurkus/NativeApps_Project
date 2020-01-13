@@ -2,6 +2,7 @@ package com.dominykas.jurkus.WordQuiz;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,10 +19,35 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String SCORE = "score";
+    private int score;
+
     private int presCounter = 0;
     private int maxPresCounter = 4;
-    private String[] keys = {"R", "I", "B", "D", "X"};
-    private String textAnswer = "BIRD";
+
+    private String[] keys1 = {"R", "I", "B", "D", "X"};
+    private String[] keys2 = {"H", "A", "N", "D", "O"};
+    private String[] keys3 = {"F", "I", "S", "H", "E"};
+    private String[] keys4 = {"D", "R", "U", "M", "A"};
+    private String[] keys5 = {"B", "O", "O", "K", "C"};
+    private String[] keys6 = {"B", "E", "L", "L", "Y"};
+    private String[] keys7 = {"G", "O", "A", "T", "E"};
+
+    private String textAnswer;
+    private String textAnswer1 = "BIRD";
+    private String textAnswer2 = "HAND";
+    private String textAnswer3 = "FISH";
+    private String textAnswer4 = "DRUM";
+    private String textAnswer5 = "BOOK";
+    private String textAnswer6 = "BELL";
+    private String textAnswer7 = "GOAT";
+
+    static int randomNum;
+
+    String[][] keySets = {keys1, keys2, keys3, keys4, keys5, keys6, keys7};
+    String[] AnswerArray = {textAnswer1, textAnswer2, textAnswer3, textAnswer4, textAnswer5, textAnswer6, textAnswer7};
+
     TextView textScreen, textQuestion, textTitle;
     Animation smallbigforth;
 
@@ -32,13 +58,44 @@ public class GameActivity extends AppCompatActivity {
 
         smallbigforth = AnimationUtils.loadAnimation(this, R.anim.smallbigforth);
 
-        keys = shuffleArray(keys);
+        String[] keys = shuffleArray(getRandomKeySet(keySets));
 
         for (String key : keys) {
             addView(((LinearLayout) findViewById(R.id.layoutParent)), key, ((EditText) findViewById(R.id.editText)));
         }
 
+        loadScore();
+        setScore();
+
         maxPresCounter = 4;
+    }
+
+    public static String[] getRandomKeySet(String[][] array) {
+        randomNum = new Random().nextInt(array.length);
+        return array[randomNum];
+    }
+
+    public String getAnswer()
+    {
+        return AnswerArray[randomNum];
+    }
+
+    private void loadScore() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        score = sharedPreferences.getInt(SCORE, 0);
+    }
+
+    private void saveScore(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(SCORE, score);
+
+        editor.apply();
+    }
+
+    private void setScore(){
+        TextView scoreText = (TextView) findViewById(R.id.textGameScore);
+        scoreText.setText("Score: " + score);
     }
 
 
@@ -60,7 +117,7 @@ public class GameActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
 
-        linearLayoutParams.rightMargin = 30;
+        linearLayoutParams.rightMargin = 20;
 
         final TextView textView = new TextView(this);
 
@@ -76,7 +133,7 @@ public class GameActivity extends AppCompatActivity {
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/FredokaOneRegular.ttf");
 
         textQuestion = (TextView) findViewById(R.id.textQuestion);
-        textScreen = (TextView) findViewById(R.id.textScreen);
+        textScreen = (TextView) findViewById(R.id.textGameScore);
         textTitle = (TextView) findViewById(R.id.textTitle);
 
         textQuestion.setTypeface(typeface);
@@ -118,23 +175,33 @@ public class GameActivity extends AppCompatActivity {
         EditText editText = findViewById(R.id.editText);
         LinearLayout linearLayout = findViewById(R.id.layoutParent);
 
+        textAnswer = getAnswer();
+
         if(editText.getText().toString().equals(textAnswer)) {
 //            Toast.makeText(GameActivity.this, "Correct", Toast.LENGTH_SHORT).show();
 
-            Intent a = new Intent(GameActivity.this,BossAct.class);
+            score += 1;
+
+            saveScore();
+
+            Intent a = new Intent(GameActivity.this, GameActivity.class);
             startActivity(a);
 
             editText.setText("");
         } else {
-            Toast.makeText(GameActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(GameActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
+
+            Intent a = new Intent(GameActivity.this,GameOverActivity.class);
+            startActivity(a);
+
             editText.setText("");
         }
 
-        keys = shuffleArray(keys);
+        /*keys = shuffleArray(keys);
         linearLayout.removeAllViews();
         for (String key : keys) {
             addView(linearLayout, key, editText);
-        }
+        }*/
 
     }
 

@@ -9,11 +9,11 @@
     <item
         android:id="@+id/nav_leader_board"
         android:icon="@drawable/ic_format_list_numbered_black_24dp"
-        android:title="Board" />
+        android:title="Leader Board" />
 
     <item
         android:id="@+id/nav_account"
-        android:icon="@drawable/ic_format_list_numbered_black_24dp"
+        android:icon="@drawable/ic_account_box_black_24dp"
         android:title="Account" />
 
 </menu>

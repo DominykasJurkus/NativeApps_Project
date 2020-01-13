@@ -21,7 +21,7 @@ public class LeaderBoardFragment extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference notebookRef = db.collection("Notebook");
 
-    private NoteAdapter adapter;
+    private BoardAdapter adapter;
 
     @Nullable
     @Override
@@ -42,7 +42,7 @@ public class LeaderBoardFragment extends Fragment {
                 .setQuery(query, Note.class)
                 .build();
 
-        adapter = new NoteAdapter(options);
+        adapter = new BoardAdapter(options);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
