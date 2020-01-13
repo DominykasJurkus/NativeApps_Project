@@ -8,7 +8,7 @@ public class Note {
         //empty constructor needed
     }
 
-    public Note(String title, String description, int priority) {
+    public Note(String title, int priority) {
         this.title = title;
         this.priority = priority;
     }

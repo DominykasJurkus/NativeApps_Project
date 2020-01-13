@@ -11,6 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -73,7 +79,30 @@ public class GameOverActivity extends AppCompatActivity {
     }
 
     public void openHomeActivity(){
+
+        if(score > 0) {
+            addToLeaderBoard();
+        }
+
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+    }
+
+    private void addToLeaderBoard()
+    {
+        String userName;
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            userName = user.getEmail();
+        } else {
+            userName = "test";
+        }
+
+        CollectionReference notebookRef = FirebaseFirestore.getInstance()
+                .collection("Leaderboard");
+        notebookRef.add(new Note(userName, score));
+        Toast.makeText(this, "Note added", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

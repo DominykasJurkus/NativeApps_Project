@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 public class LeaderBoardFragment extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference notebookRef = db.collection("Notebook");
+    private CollectionReference notebookRef = db.collection("Leaderboard");
 
     private BoardAdapter adapter;
 

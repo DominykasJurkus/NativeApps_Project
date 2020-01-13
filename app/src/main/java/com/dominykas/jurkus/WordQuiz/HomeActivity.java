@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -13,6 +14,8 @@ public class HomeActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SCORE = "score";
+
+    MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +27,40 @@ public class HomeActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new HomeFragment()).commit();
+        play();
     }
 
     @Override
     protected void onStart(){
         super.onStart();
         resetScore();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopPlayer();
+    }
+
+    private void play() {
+        if (player == null) {
+            player = MediaPlayer.create(this, R.raw.bensound_littleidea);
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    stopPlayer();
+                }
+            });
+        }
+
+        player.start();
+    }
+
+    private void stopPlayer() {
+        if (player != null) {
+            player.release();
+            player = null;
+        }
     }
 
     private  BottomNavigationView.OnNavigationItemSelectedListener navListener =
